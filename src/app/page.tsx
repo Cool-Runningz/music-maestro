@@ -1,15 +1,16 @@
 import GridBackground from "@/components/grid-background";
 import MobilePhone from "@/components/mobile-phone";
 import SearchInput from "@/components/search-input";
-import LoginButton from "@/components/login-button";
+import AuthButton from "@/components/auth-button";
+import { auth } from "@/auth";
 
-export default function LandingPage() {
+export default async function LandingPage() {
+	const session = await auth();
 	return (
 		<div className="bg-white">
 			<main>
 				<div className="relative isolate pt-14">
 					<GridBackground />
-
 					<div className="mx-auto max-w-7xl px-6 py-24 sm:py-32 lg:flex lg:items-center lg:gap-x-10 lg:px-8 lg:py-40">
 						<div className="mx-auto max-w-2xl lg:mx-0 lg:flex-auto">
 							<h1 className="mt-10 max-w-lg text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
@@ -17,13 +18,16 @@ export default function LandingPage() {
 							</h1>
 							<p className="mt-6 text-lg leading-8 text-gray-600">
 								Discover new music effortlessly. Our intelligent
-								system uses AI to create unique mixes based on
-								any search criteria.
+								system uses AI to create tailored playlists
+								based on any search criteria.
 							</p>
-							<div className="mt-10 flex items-center gap-x-6">
-								<LoginButton />
+							<div className="mt-10">
+								{session?.user ? (
+									<SearchInput />
+								) : (
+									<AuthButton />
+								)}
 							</div>
-							<SearchInput />
 						</div>
 						<MobilePhone>
 							<img

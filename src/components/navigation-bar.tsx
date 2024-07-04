@@ -1,8 +1,18 @@
 import React from "react";
-import LoginButton from "./login-button";
+import { auth } from "@/auth";
+import AuthButton from "@/components/auth-button";
+import { Avatar } from "@/components/catalyst/avatar";
 
-//TODO: Update to use catalyst's navbar component
-export default function NavigationBar() {
+const getInitials = (name: string) => {
+	if (!name) return "?";
+	return name
+		.split(" ")
+		.map((word) => word[0])
+		.join(" ");
+};
+
+export default async function NavigationBar() {
+	const session = await auth();
 	return (
 		<header className="absolute inset-x-0 top-0 z-50">
 			<nav
@@ -19,8 +29,16 @@ export default function NavigationBar() {
 					</a>
 				</div>
 
-				<div className=" lg:flex lg:flex-1 lg:justify-end">
-					<LoginButton />
+				<div className=" lg:flex lg:flex-1 lg:justify-end gap-x-8">
+					<AuthButton />
+					{session?.user ? (
+						<Avatar
+							src={session?.user?.image}
+							alt="Spotify profile avatar"
+							initials={getInitials(session?.user?.name ?? "")}
+							className="size-10 bg-cyan-700 text-white"
+						/>
+					) : null}
 				</div>
 			</nav>
 		</header>
