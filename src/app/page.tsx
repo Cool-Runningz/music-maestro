@@ -1,5 +1,5 @@
-import GridBackground from "@/components/GridBackground";
-import MobilePhone from "@/components/MobilePhone";
+import GridBackground from "@/components/icons/GridBackground";
+import MobilePhone from "@/components/icons/MobilePhone";
 import SearchInput from "@/components/SearchInput";
 import AuthButton from "@/components/AuthButton";
 import { auth } from "@/auth";
