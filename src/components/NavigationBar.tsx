@@ -1,6 +1,6 @@
 import React from "react";
 import { auth } from "@/auth";
-import AuthButton from "@/components/auth-button";
+import AuthButton from "@/components/AuthButton";
 import { Avatar } from "@/components/catalyst/avatar";
 
 const getInitials = (name: string) => {

@@ -1,7 +1,7 @@
-import GridBackground from "@/components/grid-background";
-import MobilePhone from "@/components/mobile-phone";
-import SearchInput from "@/components/search-input";
-import AuthButton from "@/components/auth-button";
+import GridBackground from "@/components/GridBackground";
+import MobilePhone from "@/components/MobilePhone";
+import SearchInput from "@/components/SearchInput";
+import AuthButton from "@/components/AuthButton";
 import { auth } from "@/auth";
 
 export default async function LandingPage() {
