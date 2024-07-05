@@ -1,6 +1,6 @@
 import GridBackground from "@/components/icons/GridBackground";
 import MobilePhone from "@/components/icons/MobilePhone";
-import SearchInput from "@/components/SearchInput";
+import SearchWidget from "@/components/SearchWidget";
 import AuthButton from "@/components/AuthButton";
 import { auth } from "@/auth";
 
@@ -23,7 +23,7 @@ export default async function LandingPage() {
 							</p>
 							<div className="mt-10">
 								{session?.user ? (
-									<SearchInput />
+									<SearchWidget />
 								) : (
 									<AuthButton />
 								)}
