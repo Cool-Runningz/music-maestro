@@ -9,7 +9,7 @@ export const parseResponse = (response: string) => JSON.parse(response)
 export const constructGPTPrompt = (userQ: FormDataEntryValue | null) => {
     return `You are a site that recommends music artists and genres based on user inquiries. Interpret the user's input and provide a relevant list.
     
-    The user has searched for: "${userQ}". Based on this, respond with an object containing a list of relevant/related music genres and artists. 
+    The user has searched for: "${userQ}". Based on this, respond with an object containing a list of relevant music genres and artists. 
     
     Your response should be an object with two keys:
     - "genres": an array of comma-separated genres from this list: [${SPOTIFY_GENRES}].

@@ -1,3 +1,5 @@
+export const SPOTIFY_BASE_URL = 'https://api.spotify.com/v1'
+
 //https://developer.spotify.com/documentation/web-api/reference/get-recommendation-genres
 //A list of available genres seed parameter values for recommendations.
 export const SPOTIFY_GENRES = [
