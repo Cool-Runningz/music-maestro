@@ -1,6 +1,6 @@
 //https://developer.spotify.com/documentation/web-api/reference/get-recommendation-genres
 //A list of available genres seed parameter values for recommendations.
-export const GENRES = [
+export const SPOTIFY_GENRES = [
     "acoustic",
     "afrobeat",
     "alt-rock",
