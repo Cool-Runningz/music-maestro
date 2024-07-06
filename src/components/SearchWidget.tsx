@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import { useFormStatus } from "react-dom";
 import { Field, Label } from "@/components/catalyst/fieldset";
 import { Button } from "@/components/catalyst/button";
 import { Input, InputGroup } from "@/components/catalyst/input";
 import { PlusIcon, MagnifyingGlassIcon } from "@heroicons/react/16/solid";
+import LoadingSpinner from "@/components/icons/LoadingSpinner";
 import { searchPrompt } from "@/app/actions";
 
 const promptSuggestions = [
@@ -32,6 +34,26 @@ const SuggestButton = ({
 	);
 };
 
+const GenerateButton = ({ prompt }: { prompt: string }) => {
+	const { pending } = useFormStatus();
+	return (
+		<Button
+			color="green"
+			type="submit"
+			disabled={!prompt || pending}
+			aria-disabled={!prompt || pending}
+			className={`max-w-[200px] w-full disabled:cursor-not-allowed`}>
+			{pending ? (
+				<div className="flex gap-y-2">
+					<LoadingSpinner /> Generating...
+				</div>
+			) : (
+				"Generate"
+			)}
+		</Button>
+	);
+};
+
 export default function SearchWidget() {
 	const [prompt, setPrompt] = useState("");
 
@@ -48,6 +70,7 @@ export default function SearchWidget() {
 						placeholder="Road trip anthems"
 						aria-placeholder="Road trip anthems"
 						value={prompt}
+						required
 						onChange={(e) => setPrompt(e.target.value)}
 					/>
 				</InputGroup>
@@ -61,13 +84,7 @@ export default function SearchWidget() {
 					))}
 				</div>
 				<div className="flex justify-center">
-					<Button
-						color="green"
-						type="submit"
-						disabled={!prompt}
-						className="max-w-[200px] w-full disabled:cursor-not-allowed">
-						Generate
-					</Button>
+					<GenerateButton prompt={prompt} />
 				</div>
 			</Field>
 		</form>
