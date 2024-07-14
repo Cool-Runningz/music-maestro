@@ -2,6 +2,7 @@ import GridBackground from "@/components/icons/GridBackground";
 import MobilePhone from "@/components/icons/MobilePhone";
 import SearchWidget from "@/components/SearchWidget";
 import AuthButton from "@/components/AuthButton";
+import Playlist from "@/components/Playlist";
 import { auth } from "@/auth";
 
 export default async function LandingPage() {
@@ -30,10 +31,7 @@ export default async function LandingPage() {
 							</div>
 						</div>
 						<MobilePhone>
-							<img
-								src="https://tailwindui.com/img/component-images/mobile-app-screenshot.png"
-								alt=""
-							/>
+							<Playlist />
 						</MobilePhone>
 					</div>
 				</div>

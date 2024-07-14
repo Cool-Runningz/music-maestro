@@ -38,7 +38,7 @@ const GenerateButton = ({ prompt }: { prompt: string }) => {
 	const { pending } = useFormStatus();
 	return (
 		<Button
-			color="green"
+			color="cyan"
 			type="submit"
 			disabled={!prompt || pending}
 			aria-disabled={!prompt || pending}

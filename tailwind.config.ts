@@ -12,6 +12,9 @@ const config: Config = {
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
       },
+      colors: {
+        'spotify-green': '#1DB954',
+      },
     }
   },
   plugins: [],

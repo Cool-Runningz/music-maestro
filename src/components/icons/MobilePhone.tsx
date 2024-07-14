@@ -9,9 +9,8 @@ export default function MobilePhone({
 		<div className="mt-16 sm:mt-24 lg:mt-0 lg:flex-shrink-0 lg:flex-grow">
 			<svg
 				viewBox="0 0 366 729"
-				role="img"
 				className="mx-auto w-[22.875rem] max-w-full drop-shadow-xl">
-				<title>App screenshot</title>
+				<title>Recommended Songs</title>
 				<defs>
 					<clipPath id="2ade4387-9c63-4fc4-b754-10e687a0d332">
 						<rect width={316} height={684} rx={36} />

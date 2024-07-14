@@ -9,7 +9,7 @@ function LoginButton() {
 				"use server";
 				await signIn("spotify");
 			}}>
-			<Button type="submit" color="green">
+			<Button type="submit" color="cyan">
 				Log in to Spotify
 			</Button>
 		</form>
@@ -23,7 +23,7 @@ function LogoutButton() {
 				"use server";
 				await signOut();
 			}}>
-			<Button type="submit" color="green">
+			<Button type="submit" color="cyan">
 				Log Out
 			</Button>
 		</form>
