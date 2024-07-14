@@ -98,7 +98,7 @@ export default function Playlist() {
 						<button
 							type="button"
 							aria-label="Play Track"
-							className="rounded-full bg-spotify-green p-2 text-white shadow-sm hover:scale-[1.15] transition-transform duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-spotify-green">
+							className="rounded-full bg-spotify-green p-2 text-white shadow-sm hover:scale-[1.15] transition-transform duration-200 focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-spotify-green">
 							<PlayIcon aria-hidden="true" className="h-5 w-5" />
 						</button>
 					</li>
