@@ -2,6 +2,7 @@ import React from "react";
 import { auth } from "@/auth";
 import AuthButton from "@/components/AuthButton";
 import { Avatar } from "@/components/catalyst/avatar";
+import { MusicalNoteIcon } from "@heroicons/react/16/solid";
 
 const getInitials = (name: string) => {
 	if (!name) return "?";
@@ -19,13 +20,14 @@ export default async function NavigationBar() {
 				className="flex items-center justify-between p-6 lg:px-8"
 				aria-label="Global">
 				<div className="flex lg:flex-1">
-					<a href="#" className="-m-1.5 p-1.5">
-						<span className="sr-only">Music Maestro</span>
-						<img
-							className="h-8 w-auto"
-							src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-							alt=""
-						/>
+					<a href="/" className="-m-1.5 p-1.5">
+						<span className="text-xl font-semibold flex items-center gap-x-2">
+							<MusicalNoteIcon
+								aria-hidden="true"
+								className="h-5 w-5 m-"
+							/>
+							Music Maestro
+						</span>
 					</a>
 				</div>
 

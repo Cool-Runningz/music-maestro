@@ -1,9 +1,10 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { PlayIcon, PauseIcon } from "@heroicons/react/16/solid";
 import { Avatar } from "@/components/catalyst/avatar";
 import { useMusic } from "@/contexts/MusicContext";
 import useSpotifyWebPlayback from "@/hooks/useSpotifyWebPlayback";
+import Image from "next/image";
 
 export default function Playlist({ accessToken }: { accessToken: string }) {
 	//Context
@@ -86,21 +87,32 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 		);
 	};
 
-	if (!isActive && !deviceId) {
-		//TODO: Replace with a different image / loading screen
+	if (!accessToken || (!isActive && !deviceId)) {
 		return (
-			<img
-				alt=""
-				src="https://tailwindui.com/img/component-images/mobile-app-screenshot.png"
-			/>
+			<div className="bg-gray-900 flex justify-center items-center h-full">
+				<Image
+					className="mx-auto"
+					src="/Spotify_Icon_Green.png"
+					alt="Spotify Icon"
+					width="150"
+					height="75"
+				/>
+			</div>
 		);
 	}
 
 	return (
 		<div className="bg-gray-900 px-4 py-8 h-full overflow-y-auto">
-			<h2 className="text-white text-center font-bold text-lg">
+			<h2 className="text-white text-center font-bold text-lg sr-only">
 				Suggested Songs
 			</h2>
+			<Image
+				className="mx-auto"
+				src="/Spotify_Logo_Green.png"
+				alt="Spotify logo"
+				width="125"
+				height="50"
+			/>
 			<ul role="list" className="divide-y divide-gray-700">
 				{/* @ts-ignore */}
 				{tracks?.map((track) => (
