@@ -13,20 +13,6 @@ const track = {
 	artists: [{ name: "" }],
 };
 
-const filterSpotifyResponses = (responses) => {
-	return responses.flatMap((response) =>
-		response.tracks.items.map((item) => {
-			//console.log("item: ", item);
-			return {
-				uri: item?.uri,
-				image: item?.album?.images?.[2],
-				song: item?.name,
-				artist: item?.artists?.[0]?.name,
-			};
-		}),
-	);
-};
-
 export default function WebPlayback({ accessToken }: { accessToken: string }) {
 	//Context
 	const { tracks } = useMusic();

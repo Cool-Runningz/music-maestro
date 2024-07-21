@@ -18,7 +18,8 @@ export const constructGPTPrompt = (userQ: FormDataEntryValue | null) => {
 }
 
 //TODO: Add types
-export const filterSpotifyResponses = (responses) => {
+export const filterSpotifyResponses = (responses: any) => {
+   //@ts-ignore
   return responses.flatMap(response => response.tracks.items.map(item => {
     return {
       uri: item.uri,
