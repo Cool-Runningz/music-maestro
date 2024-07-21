@@ -1,7 +1,14 @@
 import { filterSpotifyResponses } from "@/utils/helpers";
+import { auth } from "@/auth";
 import { type NextRequest } from "next/server";
 
 export async function GET(request: NextRequest){
+  const session = await auth();
+
+  if(!session?.user || session?.access_token){
+    return new Response(null, { status: 401}) //User is not authenticated
+  }
+
 const searchParams = request.nextUrl.searchParams
 const query = searchParams.get('query')
 console.log("🔍 Search for :", query)
