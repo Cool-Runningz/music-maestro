@@ -16,3 +16,15 @@ export const constructGPTPrompt = (userQ: FormDataEntryValue | null) => {
     - "artists": an array of comma-separated artists that match the selected genres.
     `
 }
+
+//TODO: Add types
+export const filterSpotifyResponses = (responses) => {
+  return responses.flatMap(response => response.tracks.items.map(item => {
+    return {
+      uri: item.uri,
+      image: item.album.images[2],
+      song: item.name,
+      artist: item.artists[0].name
+    }
+  }))
+}

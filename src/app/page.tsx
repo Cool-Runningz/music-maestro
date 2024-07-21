@@ -2,7 +2,7 @@ import GridBackground from "@/components/icons/GridBackground";
 import MobilePhone from "@/components/icons/MobilePhone";
 import SearchWidget from "@/components/SearchWidget";
 import AuthButton from "@/components/AuthButton";
-import Playlist from "@/components/Playlist";
+import WebPlayback from "@/components/WebPlayback";
 import { auth } from "@/auth";
 
 export default async function LandingPage() {
@@ -31,7 +31,9 @@ export default async function LandingPage() {
 							</div>
 						</div>
 						<MobilePhone>
-							<Playlist />
+							<WebPlayback
+								accessToken={session?.access_token ?? ""}
+							/>
 						</MobilePhone>
 					</div>
 				</div>

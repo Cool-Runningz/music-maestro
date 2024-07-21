@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
-import { useFormStatus } from "react-dom";
+import React, { useState, FormEvent } from "react";
 import { Field, Label } from "@/components/catalyst/fieldset";
 import { Button } from "@/components/catalyst/button";
 import { Input, InputGroup } from "@/components/catalyst/input";
 import { PlusIcon, MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import LoadingSpinner from "@/components/icons/LoadingSpinner";
-import { searchPrompt } from "@/app/actions";
+import { useMusic } from "@/contexts/MusicContext";
 
 const promptSuggestions = [
 	"Songs for my first 5K race",
@@ -25,6 +24,7 @@ const SuggestButton = ({
 }) => {
 	return (
 		<Button
+			type="button"
 			className="font-normal rounded-2xl important"
 			outline
 			onClick={() => onClick()}>
@@ -34,8 +34,13 @@ const SuggestButton = ({
 	);
 };
 
-const GenerateButton = ({ prompt }: { prompt: string }) => {
-	const { pending } = useFormStatus();
+const GenerateButton = ({
+	prompt,
+	pending,
+}: {
+	prompt: string;
+	pending?: boolean;
+}) => {
 	return (
 		<Button
 			color="cyan"
@@ -55,10 +60,19 @@ const GenerateButton = ({ prompt }: { prompt: string }) => {
 };
 
 export default function SearchWidget() {
-	const [prompt, setPrompt] = useState("");
+	//Context
+	const { updateQuery, isLoading } = useMusic();
+
+	//State
+	const [inputValue, setInputValue] = useState("");
+
+	const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		updateQuery(inputValue);
+	};
 
 	return (
-		<form action={searchPrompt}>
+		<form onSubmit={handleSubmit}>
 			<Field className="py-4">
 				<Label htmlFor="search-input">Search</Label>
 				<InputGroup>
@@ -69,9 +83,10 @@ export default function SearchWidget() {
 						type="text"
 						placeholder="Road trip anthems"
 						aria-placeholder="Road trip anthems"
-						value={prompt}
+						value={inputValue}
 						required
-						onChange={(e) => setPrompt(e.target.value)}
+						maxLength={150}
+						onChange={(e) => setInputValue(e.target.value)}
 					/>
 				</InputGroup>
 				<div className="grid sm:grid-cols-2 grid-cols-1 gap-3 text-center text-gray-500 text-sm py-4">
@@ -79,12 +94,12 @@ export default function SearchWidget() {
 						<SuggestButton
 							key={suggestion}
 							label={suggestion}
-							onClick={() => setPrompt(suggestion)}
+							onClick={() => setInputValue(suggestion)}
 						/>
 					))}
 				</div>
 				<div className="flex justify-center">
-					<GenerateButton prompt={prompt} />
+					<GenerateButton prompt={inputValue} pending={isLoading} />
 				</div>
 			</Field>
 		</form>
