@@ -52,7 +52,15 @@ export function Avatar({
 					</text>
 				</svg>
 			)}
-			{src && <Image className="size-full" src={src} alt={alt} />}
+			{src && (
+				<Image
+					className="size-full"
+					src={src}
+					alt={alt}
+					width={256}
+					height={256}
+				/>
+			)}
 		</span>
 	);
 }
