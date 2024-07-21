@@ -1,79 +1,23 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Player, Track } from "@/types/spotify.types";
 import { PlayIcon, PauseIcon } from "@heroicons/react/16/solid";
 import { Avatar } from "@/components/catalyst/avatar";
 import { useMusic } from "@/contexts/MusicContext";
+import useSpotifyWebPlayback from "@/hooks/useSpotifyWebPlayback";
 
-const track = {
-	name: "",
-	album: {
-		images: [{ url: "" }],
-	},
-	artists: [{ name: "" }],
-};
-
-export default function WebPlayback({ accessToken }: { accessToken: string }) {
+export default function Playlist({ accessToken }: { accessToken: string }) {
 	//Context
 	const { tracks } = useMusic();
 
-	//State
-	const [isPaused, setIsPaused] = useState(false);
-	const [isActive, setIsActive] = useState(false);
-	const [player, setPlayer] = useState<Player>();
-	const [currentTrack, setTrack] = useState<Track>();
-	const [deviceId, setDeviceId] = useState("");
-
-	useEffect(() => {
-		const script = document.createElement("script");
-		script.src = "https://sdk.scdn.co/spotify-player.js";
-		script.async = true;
-
-		document.body.appendChild(script);
-
-		window.onSpotifyWebPlaybackSDKReady = () => {
-			const player = new window.Spotify.Player({
-				name: "Music Maestro Web Player",
-				getOAuthToken: (cb) => {
-					cb(accessToken);
-				},
-				volume: 0.5,
-			});
-			//console.log("player: ", player);
-
-			setPlayer(player);
-
-			player.addListener("ready", ({ device_id }) => {
-				console.log("Ready with Device ID", device_id);
-				setDeviceId(device_id);
-			});
-
-			player.addListener("not_ready", ({ device_id }) => {
-				console.log("Device ID has gone offline", device_id);
-			});
-
-			player.addListener("player_state_changed", (state) => {
-				if (!state) {
-					return;
-				}
-
-				console.log(
-					"state.track_window.current_track: ",
-					state.track_window.current_track,
-				);
-				//console.log("state: ", state);
-				setTrack(state.track_window.current_track);
-				setIsPaused(state.paused);
-
-				player.getCurrentState().then((state) => {
-					//console.log("getCurrentState() ", state);
-					!state ? setIsActive(false) : setIsActive(true);
-				});
-			});
-
-			player.connect();
-		};
-	}, [accessToken]);
+	//Hooks
+	const {
+		player,
+		deviceId,
+		currentTrack,
+		isActive,
+		isPlaying,
+		setIsPlaying,
+	} = useSpotifyWebPlayback(accessToken);
 
 	const playTrack = (uri: string) => {
 		if (player && deviceId) {
@@ -91,7 +35,7 @@ export default function WebPlayback({ accessToken }: { accessToken: string }) {
 				},
 			).then((response) => {
 				console.log("playing the track: ", response);
-				setIsPaused(false);
+				setIsPlaying(true);
 				return;
 			});
 		}
@@ -110,19 +54,19 @@ export default function WebPlayback({ accessToken }: { accessToken: string }) {
 				},
 			).then(() => {
 				console.log("Pausing track");
-				setIsPaused(true);
+				setIsPlaying(false);
 			});
 		}
 	};
 
 	const togglePlayPause = (trackUri: string) => {
 		if (currentTrack?.uri === trackUri) {
-			if (isPaused) {
-				console.log("RESUME ⏯");
-				playTrack(trackUri);
-			} else {
+			if (isPlaying) {
 				console.log("PAUSE ⏸");
 				pauseTrack();
+			} else {
+				console.log("RESUME ⏯");
+				playTrack(trackUri);
 			}
 		} else {
 			console.log("PLAY ▶️");
@@ -135,10 +79,10 @@ export default function WebPlayback({ accessToken }: { accessToken: string }) {
 		if (currentTrack?.uri !== track.uri) {
 			return <PlayIcon aria-hidden="true" className="h-5 w-5" />;
 		}
-		return isPaused ? (
-			<PlayIcon aria-hidden="true" className="h-5 w-5" />
-		) : (
+		return isPlaying ? (
 			<PauseIcon aria-hidden="true" className="h-5 w-5" />
+		) : (
+			<PlayIcon aria-hidden="true" className="h-5 w-5" />
 		);
 	};
 
