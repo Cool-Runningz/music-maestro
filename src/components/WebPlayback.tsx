@@ -130,6 +130,7 @@ export default function WebPlayback({ accessToken }: { accessToken: string }) {
 		}
 	};
 
+	//@ts-ignore
 	const getIcon = (track) => {
 		if (currentTrack?.uri !== track.uri) {
 			return <PlayIcon aria-hidden="true" className="h-5 w-5" />;
@@ -157,6 +158,7 @@ export default function WebPlayback({ accessToken }: { accessToken: string }) {
 				Suggested Songs
 			</h2>
 			<ul role="list" className="divide-y divide-gray-700">
+				{/* @ts-ignore */}
 				{tracks?.map((track) => (
 					<li
 						key={track.uri}
