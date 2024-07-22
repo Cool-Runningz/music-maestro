@@ -91,15 +91,18 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 		return (
 			<div className="bg-gray-900 flex justify-center items-center h-full">
 				<Image
-					className="mx-auto"
+					className="mx-auto w-auto h-auto"
 					src="/Spotify_Icon_Green.png"
 					alt="Spotify Icon"
-					width="150"
-					height="75"
+					width={150}
+					height={75}
+					priority
 				/>
 			</div>
 		);
 	}
+
+	//TODO: Add a loading view
 
 	return (
 		<div className="bg-gray-900 px-4 py-8 h-full overflow-y-auto">
@@ -110,48 +113,52 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 				className="mx-auto"
 				src="/Spotify_Logo_Green.png"
 				alt="Spotify logo"
-				width="125"
-				height="50"
+				width={125}
+				height={50}
 			/>
 			<ul role="list" className="divide-y divide-gray-700">
 				{/* @ts-ignore */}
-				{tracks?.map((track) => (
-					<li
-						key={track.uri}
-						className="flex items-center justify-between gap-x-6 py-5">
-						<div className="flex min-w-0 gap-x-4">
-							<Avatar
-								square
-								alt="artist album cover"
-								src={track.image.url}
-								className="size-11  text-white"
-							/>
+				{tracks?.length > 0 ? (
+					tracks?.map((track) => (
+						<li
+							key={track.uri}
+							className="flex items-center justify-between gap-x-6 py-5">
+							<div className="flex min-w-0 gap-x-4">
+								<Avatar
+									square
+									alt="artist album cover"
+									src={track.image.url}
+									className="size-11  text-white"
+								/>
 
-							<div className="min-w-0 flex-auto">
-								<p className="text-sm font-semibold leading-6 text-white">
-									{track.song}
-								</p>
-								<p className="mt-1 truncate text-xs leading-5 text-gray-400">
-									{track.artist}
-								</p>
+								<div className="min-w-0 flex-auto">
+									<p className="text-sm font-semibold leading-6 text-white">
+										{track.song}
+									</p>
+									<p className="mt-1 truncate text-xs leading-5 text-gray-400">
+										{track.artist}
+									</p>
+								</div>
 							</div>
-						</div>
-						<button
-							type="button"
-							aria-label="Play Track"
-							onClick={() => {
-								if (currentTrack?.uri === track.uri) {
-									togglePlayPause(track.uri);
-								} else {
-									console.log("PLAY ▶️");
-									playTrack(track.uri);
-								}
-							}}
-							className="rounded-full bg-spotify-green p-2 text-white shadow-sm hover:bg-green-700 lg:hover:bg-spotify-green lg:hover:scale-[1.15] lg:transition-transform lg:duration-200 focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-spotify-green">
-							{getIcon(track)}
-						</button>
-					</li>
-				))}
+							<button
+								type="button"
+								aria-label="Play Track"
+								onClick={() => {
+									if (currentTrack?.uri === track.uri) {
+										togglePlayPause(track.uri);
+									} else {
+										console.log("PLAY ▶️");
+										playTrack(track.uri);
+									}
+								}}
+								className="rounded-full bg-spotify-green p-2 text-white shadow-sm hover:bg-green-700 lg:hover:bg-spotify-green lg:hover:scale-[1.15] lg:transition-transform lg:duration-200 focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-spotify-green">
+								{getIcon(track)}
+							</button>
+						</li>
+					))
+				) : (
+					<p className="text-white">No tracks to display </p>
+				)}
 			</ul>
 		</div>
 	);

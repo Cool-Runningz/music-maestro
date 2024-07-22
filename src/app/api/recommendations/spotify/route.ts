@@ -1,6 +1,16 @@
-import { filterSpotifyResponses } from "@/utils/helpers";
+import OpenAI from "openai";
+import {
+	constructGPTPrompt,
+	parseResponse,
+  filterSpotifyResponses
+} from "@/utils/helpers";
+import { GPT_SYSTEM_PROMPT } from "@/utils/constants";
 import { auth } from "@/auth";
 import { type NextRequest } from "next/server";
+
+ const openAI = new OpenAI({
+	apiKey: process.env.OPENAI_API_KEY,
+}); 
 
 export async function GET(request: NextRequest){
   const session = await auth();
@@ -9,9 +19,79 @@ export async function GET(request: NextRequest){
     return new Response(null, { status: 401}) //User is not authenticated
   }
 
+  //Extract user prompt and pass to OpenAI
 const searchParams = request.nextUrl.searchParams
 const query = searchParams.get('query')
-console.log("🔍 Search for :", query)
+  const prompt = constructGPTPrompt(query);
+	console.log("🔍 PROMPT: ", prompt); //TESTING - REMOVE BEFORE Push
+
+  try {
+		//Get ChatGPT to give us back a list of artists and genres
+		const chatCompletion = await openAI.chat.completions.create({
+			messages: [
+        {role: "system", content: GPT_SYSTEM_PROMPT},
+        { role: "user", content: prompt }
+      ],
+			model: "gpt-4o-mini",
+			frequency_penalty: 1,
+			presence_penalty: 1,
+			temperature: 1,
+			max_tokens: 1500,
+			n: 1,
+      tools:[
+        {
+          "type": "function",
+          "function": {
+            "name": "get_music_recommendations",
+            "description": "Get playlist recommendations based on the user prompt. There is a minimum of 12 songs that get returned back.",
+            "parameters": {
+              "type": "object",
+              "properties": {
+                "recommendations": {
+                  "description": "An array of objects containing a list of artists and songs that align with the users prompt.",
+                "type": "array",
+                "items": {
+                "type": "object",
+                "properties": {
+                  "artist": {
+                    "type": "string",
+                    "description": "The artist of the song that is being recommended."
+                  },
+                  "song": {
+                    "type": "string",
+                    "description": "The song from the artist that is being recommended."
+                  }
+                },
+                "required": ["artist", "song"]
+              }
+            }
+          },
+          "required": ["recommendations"]
+            }
+          }
+        }
+      ], 
+      tool_choice: "auto"
+		});
+
+		//const chatResponse = chatCompletion.choices[0].message.content ?? "";
+    const chatResponse = chatCompletion.choices[0].message.tool_calls?.[0]?.function;
+		//const artists = parseResponse(chatResponse).artists;
+
+		console.log(chatResponse); //TESTING - REMOVE BEFORE Push
+		console.log("------------");
+    console.log("JSON.parse: ", JSON.parse(chatCompletion.choices[0].message.tool_calls?.[0]?.function?.arguments ?? ''));
+//		console.log("JSON.parse: ", JSON.parse(chatResponse));		
+
+		//TODO: Now I need to call Spotify's API's
+	} catch (error) {
+    console.log('🚨 ERROR: ', error);
+    return Response.json({ error: "An error occurred while generating your playlist. Please try again.", status: 500})
+
+	}
+
+
+
 
 return Response.json(filterSpotifyResponses([
   {

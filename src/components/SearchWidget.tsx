@@ -9,7 +9,7 @@ import LoadingSpinner from "@/components/icons/LoadingSpinner";
 import { useMusic } from "@/contexts/MusicContext";
 
 const promptSuggestions = [
-	"Songs for my first 5K race",
+	"Songs for a 5K race",
 	"Upbeat morning routine",
 	"90's nostalgia",
 	"Jazz vibes for a rainy day",
