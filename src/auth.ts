@@ -1,13 +1,14 @@
 
 import NextAuth from "next-auth"
 import Spotify from "next-auth/providers/spotify"
+import { SPOTIFY_AUTH_URL, SPOTIFY_SCOPES } from "./utils/constants"
  
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Spotify({
         clientId: process.env.SPOTIFY_CLIENT_ID,
         clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-        authorization: "https://accounts.spotify.com/authorize?scope=user-read-email, streaming, user-read-private"
+        authorization: `${SPOTIFY_AUTH_URL}?scope=${SPOTIFY_SCOPES}`
     })],
     callbacks: {
        jwt({ token, account }) {

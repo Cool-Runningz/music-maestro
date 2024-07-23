@@ -5,10 +5,11 @@ import { Avatar } from "@/components/catalyst/avatar";
 import { useMusic } from "@/contexts/MusicContext";
 import useSpotifyWebPlayback from "@/hooks/useSpotifyWebPlayback";
 import Image from "next/image";
+import { SimplifiedTrack } from "@/types/custom.types";
 
 export default function Playlist({ accessToken }: { accessToken: string }) {
 	//Context
-	const { tracks } = useMusic();
+	const { tracks, isLoading } = useMusic();
 
 	//Hooks
 	const {
@@ -20,15 +21,14 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 		setIsPlaying,
 	} = useSpotifyWebPlayback(accessToken);
 
-	const playTrack = (uri: string) => {
+	const playTrack = (uri: SimplifiedTrack["uri"]) => {
 		if (player && deviceId) {
 			player.activateElement();
 			fetch(
 				`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
 				{
 					method: "PUT",
-					body: JSON.stringify({ uris: [uri] }), //NOTE; You can pass this an array of URIs to let create a "playlist" and let it autoplay
-					//body: JSON.stringify({ uris: ['spotify:track:22DysDIxio06fLuxT0f6g8', 'spotify:track:0VBBWt0uJxXNVb624WtOnC'] }),
+					body: JSON.stringify({ uris: [uri] }),
 					headers: {
 						"Content-Type": "application/json",
 						Authorization: `Bearer ${accessToken}`,
@@ -60,7 +60,7 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 		}
 	};
 
-	const togglePlayPause = (trackUri: string) => {
+	const togglePlayPause = (trackUri: SimplifiedTrack["uri"]) => {
 		if (currentTrack?.uri === trackUri) {
 			if (isPlaying) {
 				console.log("PAUSE ⏸");
@@ -75,8 +75,7 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 		}
 	};
 
-	//@ts-ignore
-	const getIcon = (track) => {
+	const getIcon = (track: SimplifiedTrack) => {
 		if (currentTrack?.uri !== track.uri) {
 			return <PlayIcon aria-hidden="true" className="h-5 w-5" />;
 		}
@@ -102,7 +101,10 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 		);
 	}
 
-	//TODO: Add a loading view
+	//TODO: Add a proper loading view
+	if (isLoading) {
+		return <p className="text-white m-auto">Loading...</p>;
+	}
 
 	return (
 		<div className="bg-gray-900 px-4 py-8 h-full overflow-y-auto">
@@ -117,26 +119,26 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 				height={50}
 			/>
 			<ul role="list" className="divide-y divide-gray-700">
-				{/* @ts-ignore */}
-				{tracks?.length > 0 ? (
+				{tracks &&
+					tracks?.length > 0 &&
 					tracks?.map((track) => (
 						<li
-							key={track.uri}
+							key={track?.uri}
 							className="flex items-center justify-between gap-x-6 py-5">
 							<div className="flex min-w-0 gap-x-4">
 								<Avatar
 									square
 									alt="artist album cover"
-									src={track.image.url}
+									src={track?.image?.url}
 									className="size-11  text-white"
 								/>
 
 								<div className="min-w-0 flex-auto">
-									<p className="text-sm font-semibold leading-6 text-white">
-										{track.song}
+									<p className="text-sm truncate font-semibold leading-6 text-white">
+										{track?.song}
 									</p>
 									<p className="mt-1 truncate text-xs leading-5 text-gray-400">
-										{track.artist}
+										{track?.artist}
 									</p>
 								</div>
 							</div>
@@ -144,7 +146,7 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 								type="button"
 								aria-label="Play Track"
 								onClick={() => {
-									if (currentTrack?.uri === track.uri) {
+									if (currentTrack?.uri === track?.uri) {
 										togglePlayPause(track.uri);
 									} else {
 										console.log("PLAY ▶️");
@@ -155,10 +157,7 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 								{getIcon(track)}
 							</button>
 						</li>
-					))
-				) : (
-					<p className="text-white">No tracks to display </p>
-				)}
+					))}
 			</ul>
 		</div>
 	);

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { Player, Track } from "@/types/spotify.types";
 
 export default function useSpotifyWebPlayback(accessToken: string) {
-	const [player, setPlayer] = useState<Player>();
+	const [player, setPlayer] = useState<Spotify.Player>();
 	const [deviceId, setDeviceId] = useState("");
-	const [currentTrack, setCurrentTrack] = useState<Track>();
+	const [currentTrack, setCurrentTrack] = useState<Spotify.Track>();
 	const [isActive, setIsActive] = useState(false); //indicates whether the current playback has been transferred to this player or not.
 	const [isPlaying, setIsPlaying] = useState(false);
 

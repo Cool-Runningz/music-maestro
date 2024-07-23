@@ -9,9 +9,10 @@ import {
 } from "react";
 import { SPOTIFY_ROUTE_HANDLER } from "@/utils/constants";
 import useSWRImmutable from "swr/immutable";
+import { SimplifiedTrack } from "@/types/custom.types";
 
 export type MusicContextValue = {
-	tracks: any; //TODO: Update types
+	tracks: SimplifiedTrack[] | undefined;
 	isLoading: boolean;
 	error: any;
 	updateQuery: Dispatch<SetStateAction<string>>;
