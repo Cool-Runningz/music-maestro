@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function useSpotifyWebPlayback(accessToken: string) {
-	const [player, setPlayer] = useState<Spotify.Player>();
+	const [spotifyPlayer, setSpotifyPlayer] = useState<Spotify.Player>();
 	const [deviceId, setDeviceId] = useState("");
 	const [currentTrack, setCurrentTrack] = useState<Spotify.Track>();
 	const [isActive, setIsActive] = useState(false); //indicates whether the current playback has been transferred to this player or not.
@@ -22,8 +22,8 @@ export default function useSpotifyWebPlayback(accessToken: string) {
 						cb(accessToken);
 					},
 				});
-				//console.log("player: ", player);
-				setPlayer(player);
+
+				setSpotifyPlayer(player);
 
 				player.addListener("ready", ({ device_id }) => {
 					console.log("Ready with Device ID", device_id);
@@ -59,7 +59,7 @@ export default function useSpotifyWebPlayback(accessToken: string) {
 	}, [accessToken]);
 
 	return {
-		player,
+		player: spotifyPlayer,
 		deviceId,
 		currentTrack,
 		isActive,
