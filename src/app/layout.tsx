@@ -9,8 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
 	title: "Music Maestro",
-	description:
-		"An app that helps you curate a playlist of songs based on any search criteria.",
+	description: "Curate a playlist of songs based on any search criteria.",
 };
 
 export default function RootLayout({

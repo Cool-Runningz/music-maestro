@@ -10,6 +10,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
         authorization: `${SPOTIFY_AUTH_URL}?scope=${SPOTIFY_SCOPES}`
     })],
+    secret: process.env.AUTH_SECRET,
     callbacks: {
        jwt({ token, account }) {
         
