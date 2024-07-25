@@ -1,5 +1,6 @@
 export const SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize"
 export const SPOTIFY_BASE_URL = "https://api.spotify.com/v1"
+export const SPOTIFY_PLAYER_URL = `${SPOTIFY_BASE_URL}/me/player`
 export const SPOTIFY_ROUTE_HANDLER = "/api/recommendations/spotify"
 export const SPOTIFY_SCOPES = "user-read-email, streaming, user-read-private"
 

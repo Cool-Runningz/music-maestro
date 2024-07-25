@@ -1,11 +1,15 @@
 "use client";
 import React from "react";
-import { PlayIcon, PauseIcon } from "@heroicons/react/16/solid";
 import { Avatar } from "@/components/catalyst/avatar";
 import { useMusic } from "@/contexts/MusicContext";
 import useSpotifyWebPlayback from "@/hooks/useSpotifyWebPlayback";
 import Image from "next/image";
+import LoadingRow from "@/components/icons/LoadingRow";
+import NoResults from "@/components/Playlist/NoResults";
+import { SpotifyBanner } from "@/components/icons/Logos";
 import { SimplifiedTrack } from "@/types/custom.types";
+import { SPOTIFY_PLAYER_URL } from "@/utils/constants";
+import { getAriaLabelText, getIcon } from "./helpers";
 
 export default function Playlist({ accessToken }: { accessToken: string }) {
 	//Context
@@ -24,18 +28,14 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 	const playTrack = (uri: SimplifiedTrack["uri"]) => {
 		if (player && deviceId) {
 			player.activateElement();
-			fetch(
-				`https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
-				{
-					method: "PUT",
-					body: JSON.stringify({ uris: [uri] }),
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${accessToken}`,
-					},
+			fetch(`${SPOTIFY_PLAYER_URL}/play?device_id=${deviceId}`, {
+				method: "PUT",
+				body: JSON.stringify({ uris: [uri] }),
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${accessToken}`,
 				},
-			).then((response) => {
-				console.log("playing the track: ", response);
+			}).then((response) => {
 				setIsPlaying(true);
 				return;
 			});
@@ -44,17 +44,13 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 
 	const pauseTrack = () => {
 		if (player && deviceId) {
-			fetch(
-				`https://api.spotify.com/v1/me/player/pause?device_id=${deviceId}`,
-				{
-					method: "PUT",
-					headers: {
-						"Content-Type": "application/json",
-						Authorization: `Bearer ${accessToken}`,
-					},
+			fetch(`${SPOTIFY_PLAYER_URL}/pause?device_id=${deviceId}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: `Bearer ${accessToken}`,
 				},
-			).then(() => {
-				console.log("Pausing track");
+			}).then(() => {
 				setIsPlaying(false);
 			});
 		}
@@ -63,27 +59,14 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 	const togglePlayPause = (trackUri: SimplifiedTrack["uri"]) => {
 		if (currentTrack?.uri === trackUri) {
 			if (isPlaying) {
-				console.log("PAUSE ⏸");
 				pauseTrack();
 			} else {
 				console.log("RESUME ⏯");
 				playTrack(trackUri);
 			}
 		} else {
-			console.log("PLAY ▶️");
 			playTrack(trackUri);
 		}
-	};
-
-	const getIcon = (track: SimplifiedTrack) => {
-		if (currentTrack?.uri !== track.uri) {
-			return <PlayIcon aria-hidden="true" className="h-5 w-5" />;
-		}
-		return isPlaying ? (
-			<PauseIcon aria-hidden="true" className="h-5 w-5" />
-		) : (
-			<PlayIcon aria-hidden="true" className="h-5 w-5" />
-		);
 	};
 
 	if (!accessToken || (!isActive && !deviceId)) {
@@ -101,36 +84,40 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 		);
 	}
 
-	//TODO: Add a proper loading view
 	if (isLoading) {
-		return <p className="text-white m-auto">Loading...</p>;
+		return (
+			<div className="bg-gray-900 h-full py-8">
+				<SpotifyBanner />
+				<p className="sr-only">Loading...</p>
+				<div className="flex flex-col gap-y-4 mt-6">
+					{Array.from({ length: 4 }, (_, index) => (
+						<LoadingRow key={index} />
+					))}
+				</div>
+			</div>
+		);
 	}
 
 	return (
 		<div className="bg-gray-900 px-4 py-8 h-full overflow-y-auto">
 			<h2 className="text-white text-center font-bold text-lg sr-only">
-				Suggested Songs
+				Playlist
 			</h2>
-			<Image
-				className="mx-auto"
-				src="/Spotify_Logo_Green.png"
-				alt="Spotify logo"
-				width={125}
-				height={50}
-			/>
-			<ul role="list" className="divide-y divide-gray-700">
-				{tracks &&
-					tracks?.length > 0 &&
-					tracks?.map((track) => (
+			<SpotifyBanner />
+			{!tracks || tracks?.length === 0 ? (
+				<NoResults />
+			) : (
+				<ul role="list" className="divide-y divide-gray-700">
+					{tracks.map((track) => (
 						<li
 							key={track?.uri}
 							className="flex items-center justify-between gap-x-6 py-5">
 							<div className="flex min-w-0 gap-x-4">
 								<Avatar
 									square
-									alt="artist album cover"
+									alt={`${track?.artist} album cover`}
 									src={track?.image?.url}
-									className="size-11  text-white"
+									className="size-11 text-white"
 								/>
 
 								<div className="min-w-0 flex-auto">
@@ -144,21 +131,21 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 							</div>
 							<button
 								type="button"
-								aria-label="Play Track"
+								aria-label={getAriaLabelText(track, isPlaying)}
 								onClick={() => {
 									if (currentTrack?.uri === track?.uri) {
 										togglePlayPause(track.uri);
 									} else {
-										console.log("PLAY ▶️");
 										playTrack(track.uri);
 									}
 								}}
 								className="rounded-full bg-spotify-green p-2 text-white shadow-sm hover:bg-green-700 lg:hover:bg-spotify-green lg:hover:scale-[1.15] lg:transition-transform lg:duration-200 focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-spotify-green">
-								{getIcon(track)}
+								{getIcon(track, currentTrack, isPlaying)}
 							</button>
 						</li>
 					))}
-			</ul>
+				</ul>
+			)}
 		</div>
 	);
 }

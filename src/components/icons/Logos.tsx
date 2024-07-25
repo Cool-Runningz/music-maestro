@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export const TwitterIcon = () => (
 	<svg
 		fill="currentColor"
@@ -20,4 +22,15 @@ export const GitHubIcon = () => (
 			clipRule="evenodd"
 		/>
 	</svg>
+);
+
+export const SpotifyBanner = () => (
+	<Image
+		className="mx-auto"
+		src="/Spotify_Logo_Green.png"
+		alt="Spotify logo"
+		width={100}
+		height={25}
+		priority
+	/>
 );
