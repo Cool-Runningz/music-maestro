@@ -11,6 +11,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         authorization: `${SPOTIFY_AUTH_URL}?scope=${SPOTIFY_SCOPES}`
     })],
     secret: process.env.AUTH_SECRET,
+    trustHost: true,
     callbacks: {
        jwt({ token, account }) {
         
