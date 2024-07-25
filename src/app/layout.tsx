@@ -8,8 +8,9 @@ import MusicProvider from "@/contexts/MusicContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-	title: "Music Maestro",
-	description: "Curate a playlist of songs based on any search criteria.",
+	title: "Music Maestro - Craft custom playlists based on any search criteria.",
+	description:
+		"Leverage AI to curate a playlist of songs and discover music on Spotify.",
 };
 
 export default function RootLayout({

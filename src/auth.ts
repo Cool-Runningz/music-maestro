@@ -12,6 +12,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     })],
     secret: process.env.AUTH_SECRET,
     trustHost: true,
+    session: {
+      maxAge: 3600, /*TEMP: Timeout session at 1 hour to match Spotify's token expiration 
+                       until I have time to implement the refresh token workflow. */
+    },
     callbacks: {
        jwt({ token, account }) {
         
