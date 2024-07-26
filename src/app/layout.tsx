@@ -4,6 +4,7 @@ import "./globals.css";
 import NavigationBar from "@/components/NavigationBar";
 import Footer from "@/components/Footer";
 import MusicProvider from "@/contexts/MusicContext";
+import PlausibleProvider from "next-plausible";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,11 +45,16 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={inter.className}>
-				<NavigationBar />
-				<MusicProvider>{children}</MusicProvider>
-				<Footer />
-			</body>
+			<PlausibleProvider
+				domain="musicmaestro.io"
+				trackOutboundLinks
+				taggedEvents>
+				<body className={inter.className}>
+					<NavigationBar />
+					<MusicProvider>{children}</MusicProvider>
+					<Footer />
+				</body>
+			</PlausibleProvider>
 		</html>
 	);
 }

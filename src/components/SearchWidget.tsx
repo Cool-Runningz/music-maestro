@@ -7,6 +7,7 @@ import { Input, InputGroup } from "@/components/catalyst/input";
 import { PlusIcon, MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 import LoadingSpinner from "@/components/icons/LoadingSpinner";
 import { useMusic } from "@/contexts/MusicContext";
+import { usePlausible } from "next-plausible";
 
 const promptSuggestions = [
 	"Songs for a 5K race",
@@ -22,12 +23,18 @@ const SuggestButton = ({
 	label: string;
 	onClick: () => void;
 }) => {
+	const plausible = usePlausible();
 	return (
 		<Button
 			type="button"
 			className="font-normal rounded-2xl important"
 			outline
-			onClick={() => onClick()}>
+			onClick={() => {
+				onClick();
+				plausible(`Suggested Prompt Click`, {
+					props: { prompt: label },
+				});
+			}}>
 			<PlusIcon />
 			{label}
 		</Button>
@@ -41,10 +48,14 @@ const GenerateButton = ({
 	prompt: string;
 	pending?: boolean;
 }) => {
+	const plausible = usePlausible();
 	return (
 		<Button
 			color="cyan"
 			type="submit"
+			onClick={() => {
+				plausible(`Generate Click`);
+			}}
 			disabled={!prompt || pending}
 			aria-disabled={!prompt || pending}
 			className={`max-w-[200px] w-full disabled:cursor-not-allowed`}>

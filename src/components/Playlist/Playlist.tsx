@@ -10,12 +10,14 @@ import { SpotifyBanner } from "@/components/icons/Logos";
 import { SimplifiedTrack } from "@/types/custom.types";
 import { SPOTIFY_PLAYER_URL } from "@/utils/constants";
 import { getAriaLabelText, getIcon } from "./helpers";
+import { usePlausible } from "next-plausible";
 
 export default function Playlist({ accessToken }: { accessToken: string }) {
 	//Context
 	const { tracks, isLoading } = useMusic();
 
 	//Hooks
+	const plausible = usePlausible();
 	const {
 		player,
 		deviceId,
@@ -135,8 +137,14 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 								onClick={() => {
 									if (currentTrack?.uri === track?.uri) {
 										togglePlayPause(track.uri);
+										plausible(`Playlist: Play or Pause`, {
+											props: { song: track?.song },
+										});
 									} else {
 										playTrack(track.uri);
+										plausible(`Playlist: Play`, {
+											props: { song: track?.song },
+										});
 									}
 								}}
 								className="rounded-full bg-spotify-green p-2 text-white shadow-sm hover:bg-green-700 lg:hover:bg-spotify-green lg:hover:scale-[1.15] lg:transition-transform lg:duration-200 focus-visible:outline focus-visible:outline-4 focus-visible:outline-offset-2 focus-visible:outline-spotify-green">
