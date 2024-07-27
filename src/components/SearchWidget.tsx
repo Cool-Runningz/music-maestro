@@ -54,7 +54,7 @@ const GenerateButton = ({
 			color="cyan"
 			type="submit"
 			onClick={() => {
-				plausible(`Generate Click`);
+				plausible(`Generate Click`, { props: { prompt } });
 			}}
 			disabled={!prompt || pending}
 			aria-disabled={!prompt || pending}

@@ -22,11 +22,13 @@ export default async function LandingPage() {
 								create tailored playlists based on any search
 								criteria.
 							</p>
-							<div className="mt-10">
+							<div className="mt-2 sm:mt-10">
 								{session?.user ? (
 									<SearchWidget />
 								) : (
-									<AuthButton />
+									<div className="invisible sm:visible">
+										<AuthButton />
+									</div>
 								)}
 							</div>
 						</div>
