@@ -10,7 +10,7 @@
   <strong> Use AI to help you curate a playlist and discover music on Spotify.</strong>
     <br />
     <br />
-    <a href="https://musicmaestro.io/">View Demo 🏗️</a>
+     <a href="https://musicmaestro.io/">View Site 🌐</a>  &nbsp; | &nbsp; <a href="https://youtu.be/ug1DSCcwcqU">View Demo 🏗️</a>
   </p>
 </p>
 
