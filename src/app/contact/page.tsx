@@ -30,6 +30,7 @@ export default function ContactForm() {
 							name="full-name"
 							type="text"
 							autoComplete="given-name"
+							required
 						/>
 					</Field>
 
@@ -44,12 +45,18 @@ export default function ContactForm() {
 							name="email"
 							type="email"
 							autoComplete="email"
+							required
 						/>
 					</Field>
 
 					<Field className="sm:col-span-2">
-						<Label htmlFor="message">Message</Label>
-						<Textarea id="message" name="message" rows={4} />
+						<Label htmlFor="message">Message*</Label>
+						<Textarea
+							id="message"
+							name="message"
+							rows={4}
+							required
+						/>
 					</Field>
 				</Fieldset>
 				<div className="mt-10">
