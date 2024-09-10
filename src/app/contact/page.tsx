@@ -1,6 +1,11 @@
 import GridBackground from "@/components/icons/GridBackground";
 import { Button } from "@/components/catalyst/button";
-import { Field, Label, Fieldset } from "@/components/catalyst/fieldset";
+import {
+	Field,
+	Label,
+	Fieldset,
+	Description,
+} from "@/components/catalyst/fieldset";
 import { Input } from "@/components/catalyst/input";
 import { Textarea } from "@/components/catalyst/textarea";
 
@@ -30,6 +35,10 @@ export default function ContactForm() {
 
 					<Field className="sm:col-span-2">
 						<Label htmlFor="email">Email*</Label>
+						<Description>
+							Please provide the email linked with your Spotify
+							account.
+						</Description>
 						<Input
 							id="email"
 							name="email"

@@ -65,7 +65,7 @@ export default function FAQ() {
 					Frequently Asked Questions
 				</h2>
 				<div className="mt-12">
-					<dl className="space-y-16 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 sm:space-y-0 lg:gap-x-10">
+					<dl className="space-y-12 sm:grid sm:grid-cols-2 sm:gap-x-6 sm:gap-y-16 sm:space-y-0 lg:gap-x-10">
 						{faqs.map((faq) => (
 							<div key={faq.id}>
 								<dt className="text-base font-semibold leading-7 text-gray-900">
