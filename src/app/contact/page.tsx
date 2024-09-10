@@ -1,6 +1,6 @@
 import GridBackground from "@/components/icons/GridBackground";
 import { Button } from "@/components/catalyst/button";
-import { Field, Label } from "@/components/catalyst/fieldset";
+import { Field, Label, Fieldset } from "@/components/catalyst/fieldset";
 import { Input } from "@/components/catalyst/input";
 import { Textarea } from "@/components/catalyst/textarea";
 
@@ -17,7 +17,7 @@ export default function ContactForm() {
 				action="https://usebasin.com/f/bbb79176ccd5"
 				method="POST"
 				className="mx-auto mt-16 max-w-xl sm:mt-20">
-				<div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
+				<Fieldset className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
 					<Field className="sm:col-span-2">
 						<Label htmlFor="full-name">Full name*</Label>
 						<Input
@@ -42,7 +42,7 @@ export default function ContactForm() {
 						<Label htmlFor="message">Message</Label>
 						<Textarea id="message" name="message" rows={4} />
 					</Field>
-				</div>
+				</Fieldset>
 				<div className="mt-10">
 					<Button type="submit" color="cyan" className="block w-full">
 						Send Message
