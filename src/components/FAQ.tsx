@@ -4,7 +4,7 @@ const faqs = [
 		question: "Why do I get an error when trying to log in?",
 		answer: (
 			<>
-				Music Maestro is still in the approval phase with Spotify, which
+				Music Maestro is still in the review process with Spotify. This
 				means I need to manually add each user to allow authentication.
 				If you&apos;re interested in using this, fill out this{" "}
 				<a
