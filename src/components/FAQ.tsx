@@ -8,9 +8,7 @@ const faqs = [
 				means I need to manually add each user to allow authentication.
 				If you&apos;re interested in using this, fill out this{" "}
 				<a
-					href="https://www.alyssaholland.com/#contact"
-					target="_blank"
-					rel="noopener noreferrer"
+					href="https://musicmaestro.io/contact"
 					className="text-blue-500 underline">
 					contact form
 				</a>{" "}
