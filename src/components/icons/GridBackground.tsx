@@ -3,7 +3,7 @@ import React from "react";
 export default function GridBackground() {
 	return (
 		<svg
-			className="absolute inset-0 -z-10 h-full w-full stroke-gray-200 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
+			className="absolute inset-0 -z-10 h-full w-full stroke-gray-300 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
 			aria-hidden="true">
 			<defs>
 				<pattern
