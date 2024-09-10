@@ -3,6 +3,7 @@ import MobilePhone from "@/components/icons/MobilePhone";
 import SearchWidget from "@/components/SearchWidget";
 import AuthButton from "@/components/AuthButton";
 import Playlist from "@/components/Playlist/Playlist";
+import FAQ from "@/components/FAQ";
 import { auth } from "@/auth";
 
 export default async function LandingPage() {
@@ -39,6 +40,7 @@ export default async function LandingPage() {
 						</MobilePhone>
 					</div>
 				</div>
+				<FAQ />
 			</main>
 		</div>
 	);
