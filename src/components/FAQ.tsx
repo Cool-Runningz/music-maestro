@@ -9,7 +9,7 @@ const faqs = [
 				If you&apos;re interested in using this, fill out this{" "}
 				<a
 					href="https://musicmaestro.io/contact"
-					className="text-blue-500 underline">
+					className="text-blue-700 underline">
 					contact form
 				</a>{" "}
 				and I will try my best to get you early beta access.
@@ -31,7 +31,7 @@ const faqs = [
 					href="https://github.com/Cool-Runningz/music-maestro"
 					target="_blank"
 					rel="noopener noreferrer"
-					className="text-blue-500 underline">
+					className="text-blue-700 underline">
 					GitHub
 				</a>
 				.
@@ -48,7 +48,7 @@ const faqs = [
 					href="https://blog.alyssaholland.me/music-maestro"
 					target="_blank"
 					rel="noopener noreferrer"
-					className="text-blue-500 underline">
+					className="text-blue-700 underline">
 					blog post
 				</a>{" "}
 				to learn more about how this project was implemented.
