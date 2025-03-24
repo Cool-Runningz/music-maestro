@@ -10,7 +10,6 @@ export default function MobilePhone({
 			<svg
 				viewBox="0 0 366 729"
 				className="mx-auto w-[22.875rem] max-w-full drop-shadow-xl">
-				<title>Recommended Songs</title>
 				<defs>
 					<clipPath id="2ade4387-9c63-4fc4-b754-10e687a0d332">
 						<rect width={316} height={684} rx={36} />

@@ -35,7 +35,6 @@ export const fetchTracks = async (rec: Recommendation, token: string) => {
 	}
 
 	const data: SpotifyApi.TrackSearchResponse = await response.json();
-	console.log("fetchTracks - data: ", data);
 
 	if (!data) {
 		throw new Error(`No data found for rec: ${rec}`);
@@ -52,7 +51,6 @@ export async function searchSpotify(recs: Recommendation[]) {
 		fetchTracks(rec, session?.access_token ?? ""),
 	);
 	const results = await Promise.allSettled(fetchPromises);
-  console.log('searchSpotify - Promises: ', results)
 
 	//Filter out any promises that were rejected
 	const tracks = results
@@ -72,7 +70,8 @@ export async function searchSpotify(recs: Recommendation[]) {
       uri: item?.uri,
       image: item?.album?.images?.[2],
       song: item?.name,
-      artist: item?.artists?.[0]?.name
+      artist: item?.artists?.[0]?.name,
+	  externalUrl: item?.external_urls?.spotify
     }
   }))
 } 

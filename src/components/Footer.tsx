@@ -33,7 +33,7 @@ export default function Footer() {
 						Made with 💚 by{" "}
 						<a
 							href="https://alyssaholland.com"
-							className="hover:underline decoration-wavy"
+							className="hover:underline decoration-wavy focus-visible:underline"
 							target="_blank"
 							rel="noopener noreferrer">
 							Alyssa Holland
@@ -41,7 +41,7 @@ export default function Footer() {
 					</p>
 				</div>
 				<div className="mt-4 text-gray-500 text-xs text-center md:mt-0">
-					<Link href="/privacy-policy" className="hover:underline" >
+					<Link href="/privacy-policy" className="hover:underline focus-visible:underline" >
 						Privacy Policy
 					</Link>
 				</div>

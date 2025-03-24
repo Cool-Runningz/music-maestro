@@ -126,9 +126,13 @@ export default function Playlist({ accessToken }: { accessToken: string }) {
 									<p className="text-sm truncate font-semibold leading-6 text-white">
 										{track?.song}
 									</p>
-									<p className="mt-1 truncate text-xs leading-5 text-gray-400">
+									<a href={track?.externalUrl} 
+									   className="mt-1 truncate text-xs leading-5 text-gray-400 hover:underline focus-visible:underline"
+									   target="_blank"  
+									   rel="noopener noreferrer"
+									   >
 										{track?.artist}
-									</p>
+									</a>
 								</div>
 							</div>
 							<button

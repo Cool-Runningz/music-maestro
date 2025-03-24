@@ -8,4 +8,5 @@ export type SimplifiedTrack = {
 	image: SpotifyApi.TrackObjectFull["album"]["images"][2];
 	song: SpotifyApi.TrackObjectSimplified["name"];
 	artist: SpotifyApi.TrackObjectSimplified["artists"][0]["name"];
+	externalUrl: SpotifyApi.TrackObjectSimplified["external_urls"]["spotify"]
 };
