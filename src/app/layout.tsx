@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 	description,
 	openGraph: {
 		type: "website",
-		url: "https://musicmaestro.io",
+		url: "https://music-maestro.netlify.app",
 		title,
 		description,
 		images: [
@@ -46,7 +46,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<PlausibleProvider
-				domain="musicmaestro.io"
+				domain="music-maestro.netlify.app"
 				trackOutboundLinks
 				taggedEvents>
 				<body className={inter.className}>

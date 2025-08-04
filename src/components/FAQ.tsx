@@ -8,7 +8,7 @@ const faqs = [
 				means I need to manually add each user to allow authentication.
 				If you&apos;re interested in using this, fill out this{" "}
 				<a
-					href="https://musicmaestro.io/contact"
+					href="https://music-maestro.netlify.app/contact"
 					className="text-blue-700 underline">
 					contact form
 				</a>{" "}
